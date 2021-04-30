@@ -2,7 +2,7 @@ Character = Class {}
 require 'gun'
 
 function Character:init()
-    self.x, self.y, self.dx, self.dy, self.size = 10, 10, 0, 0, 50
+    self.x, self.y, self.dx, self.dy, self.size = 170, 700, 0, 0, 50
     gun = Gun(self)
 end
 

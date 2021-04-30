@@ -1,12 +1,15 @@
 Class = require 'class'
 require 'TouchContralls'
 require 'character'
+require 'eGenerator'
 WIDTH = love.graphics.getWidth()
 HEIGHT = love.graphics.getHeight()
 
 function love.load()
+    math.randomseed(os.time())
     love.window.setMode(391, 862)
     p1 = Character()
+    EGen:GenerateRandom(10)
 end
 
 function love.update(dt)
@@ -27,6 +30,7 @@ function love.draw()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print("MouseX: " .. tostring(mouseX), 100, 100)
     love.graphics.print("MouseY: " .. tostring(mouseY), 100, 130)
+    EGen:Render()
     p1:draw()
     TouchContralls:Draw()
 end

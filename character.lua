@@ -1,6 +1,6 @@
 Character = Class {}
 require 'gun'
-
+speed = 100
 function Character:init()
     self.x, self.y, self.dx, self.dy, self.size = 170, 700, 0, 0, 50
     gun = Gun(self)
@@ -20,6 +20,16 @@ function Character:draw()
 end
 
 function Character:Move(x, y)
-    self.dx = x
-    self.dy = y
+    x = math.min(50, x)
+    y = math.min(50, y)
+    self.angle = GetAngle(self.x, self.y, x, y)
+    magmitude = math.sqrt(x * x + y * y)
+    print(magmitude)
+    if x ~= 0 and y ~= 0 then
+        self.dx = ((x / magmitude) * speed)
+        self.dy = ((y / magmitude) * speed)
+    else
+        self.dx = 0
+        self.dy = 0
+    end
 end

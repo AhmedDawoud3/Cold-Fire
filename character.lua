@@ -8,8 +8,8 @@ end
 
 function Character:update(dt)
     gun:update(self)
-    self.x = self.x + self.dx * dt
-    self.y = self.y + self.dy * dt
+    self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
+    self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
 end
 
 function Character:draw()

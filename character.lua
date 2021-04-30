@@ -7,6 +7,7 @@ function Character:init()
 end
 
 function Character:update(dt)
+    gun:update(self)
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt
 end
@@ -14,6 +15,8 @@ end
 function Character:draw()
     love.graphics.setColor(1, 0.7, 0.1, 1)
     love.graphics.rectangle("fill", self.x, self.y, self.size, self.size)
+    love.graphics.setColor(1, 1, 1, 1)
+    gun:Render()
 end
 
 function Character:Move(x, y)

@@ -13,8 +13,8 @@ function EGen:GenerateRandom(numberOfEnemies)
     numberOfEnemies = numberOfEnemies or 1
     for i = 1, numberOfEnemies do
         eSize = math.random(10, 25)
-        eX = math.random(20, WIDTH - eSize - 10)
-        eY = math.random(20, HEIGHT - 20)
+        eX = math.random(10, 391 - eSize)
+        eY = math.random(10, 862 - eSize)
         eR = math.random(9000, 10000) / 10000
         eG = math.random(2000, 4000) / 10000
         eB = math.random(2000, 4000) / 10000

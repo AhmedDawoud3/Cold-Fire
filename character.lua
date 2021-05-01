@@ -7,7 +7,7 @@ function Character:init()
 end
 
 function Character:update(dt)
-    gun:update(self)
+    gun:update(dt, self)
     self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
     self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
 end
@@ -24,7 +24,6 @@ function Character:Move(x, y)
     y = math.min(50, y)
     self.angle = GetAngle(self.x, self.y, x, y)
     magmitude = math.sqrt(x * x + y * y)
-    print(magmitude)
     if x ~= 0 and y ~= 0 then
         self.dx = ((x / magmitude) * speed)
         self.dy = ((y / magmitude) * speed)

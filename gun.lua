@@ -21,6 +21,7 @@ function Gun:update(dt, player)
         gNearestEnemy = GetnearestEnemy(self)
         if gNearestEnemy then
             self.angle = GetAngle(self.centerX, self.centerY, gNearestEnemy.x, gNearestEnemy.y)
+            gNearestEnemy.marked = true
         end
     else
         self.angle = self.angle + dt

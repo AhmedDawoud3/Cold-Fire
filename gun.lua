@@ -28,6 +28,7 @@ function Gun:update(dt, player)
     -- print(math.deg(self.angle))
     self.endX = self.centerX + self.size * math.cos(self.angle)
     self.endY = self.centerY + self.size * math.sin(self.angle)
+    cWalls = current_level.walls
 
     for i, v in ipairs(bullets) do
         v.x = v.x + (v.dx * dt)
@@ -40,9 +41,16 @@ function Gun:update(dt, player)
                 enemies[i].size and v.x < enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
                 v.x = v.x * 1000
                 v.y = v.y * 1000
-                table.remove(bullets, i)
+                v.x = v.x + 1000000
                 table.remove(enemies, i)
             end
+
+            for o, p in ipairs(cWalls) do
+                if p.y + p.height > v.y and p.y < v.y + 6 and p.x + p.width > v.x and p.x < v.x + 6 then
+                    v.x = v.x + 1000000
+                end
+            end
+
         end
     end
 

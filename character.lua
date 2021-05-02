@@ -1,8 +1,9 @@
 Character = Class {}
 require 'gun'
 speed = 100
-function Character:init()
-    self.x, self.y, self.dx, self.dy, self.size = 170, 700, 0, 0, 50
+collided = false
+function Character:init(x, y)
+    self.x, self.y, self.dx, self.dy, self.size = x, y, 0, 0, 50
     gun = Gun(self)
 end
 
@@ -10,6 +11,53 @@ function Character:update(dt)
     gun:update(dt, self)
     self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
     self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
+    collided = false
+    cWalls = current_level.walls
+    if cWalls then
+        for i, v in ipairs(cWalls) do
+            -- Y
+            if self.y < cWalls[i].y + cWalls[i].height and self.y > cWalls[i].y + self.size then
+                if self.x < cWalls[i].x + cWalls[i].width and self.x > cWalls[i].x + self.size then
+                    collided = true
+                end
+                if self.x > cWalls[i].x - self.size and self.x < cWalls[i].x + cWalls[i].width then
+                    collided = true
+                end
+            end
+            if self.y > cWalls[i].y - self.size and self.y < cWalls[i].y + cWalls[i].height then
+                if self.x > cWalls[i].x - self.size and self.x < cWalls[i].x + cWalls[i].width then
+                    collided = true
+                    -- 
+                end
+                if self.x < cWalls[i].x + cWalls[i].width and self.x > cWalls[i].x + self.size then
+                    collided = true
+                end
+            end
+
+            -- if self.y < cWalls[i].y + cWalls[i].height and self.y > cWalls[i].y + self.size and collided then
+            --     self.y = cWalls[i].y + cWalls[i].height
+            -- end
+            -- if self.y > cWalls[i].y - self.size and self.y < cWalls[i].y + cWalls[i].height and collided then
+            --     self.y = cWalls[i].y - self.size
+            -- end
+            -- if self.x < cWalls[i].x + cWalls[i].width and self.x > cWalls[i].x + self.size and collided then
+            --     self.x = cWalls[i].x + cWalls[i].width
+            -- end
+            -- if self.x > cWalls[i].x - self.size and self.x < cWalls[i].x + cWalls[i].width then
+            --     self.x = cWalls[i].x - self.size
+            -- end
+            if collided then
+                angleW = GetAngle(self.x + (self.size / 2), self.y + (self.size / 2),
+                             cWalls[i].x + (cWalls[i].width / 2), cWalls[i].y + (cWalls[i].height / 2))
+                xW = -math.cos(angleW)
+                yW = -math.sin(angleW)
+                self.x = self.x + xW / 10
+                self.y = self.y + yW / 10
+            end
+        end
+
+    end
+
 end
 
 function Character:draw()
@@ -24,7 +72,7 @@ function Character:Move(x, y)
     y = math.min(50, y)
     self.angle = GetAngle(self.x, self.y, x, y)
     magmitude = math.sqrt(x * x + y * y)
-    if x ~= 0 and y ~= 0 then
+    if x ~= 0 and y ~= 0 and not collided then
         self.dx = ((x / magmitude) * speed)
         self.dy = ((y / magmitude) * speed)
     else

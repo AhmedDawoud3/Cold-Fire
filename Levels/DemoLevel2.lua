@@ -1,7 +1,7 @@
 DemoLevel2 = Class {}
 
 function DemoLevel2:init()
-    p1 = Character()
+    p1 = Character(100, 400)
     EGen:GenerateRandom(30)
 end
 

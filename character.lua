@@ -2,12 +2,18 @@ Character = Class {}
 require 'gun'
 speed = 100
 collided = false
-function Character:init(x, y)
+function Character:init(x, y, maxHealth)
     self.x, self.y, self.dx, self.dy, self.size = x, y, 0, 0, 50
+    self.maxHealth = maxHealth or 100
+    self.health = {
+        value = self.maxHealth,
+        opacity = 1
+    }
     gun = Gun(self)
 end
 
 function Character:update(dt)
+    self.health.value = math.max(0, self.health.value)
     gun:update(dt, self)
     self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
     self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
@@ -64,6 +70,13 @@ function Character:draw()
     love.graphics.setColor(1, 0.7, 0.1, 1)
     love.graphics.rectangle("fill", self.x, self.y, self.size, self.size)
     love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setLineWidth(3)
+    love.graphics.rectangle("line", self.x, self.y, self.size, self.size)
+    love.graphics.setColor(0.8, 0.11, 0.16, self.health.opacity)
+    love.graphics.rectangle("fill", self.x, self.y - 20, self.size * (self.health.value / self.maxHealth), 10)
+    love.graphics.setColor(0, 0, 0, self.health.opacity)
+    love.graphics.rectangle("line", self.x, self.y - 20, self.size, 10)
+
     gun:Render()
 end
 

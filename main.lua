@@ -10,8 +10,8 @@ function love.load()
     math.randomseed(os.time())
     love.window.setMode(391, 862)
     Fonts = {
-        ["main"] = love.graphics.newFont('Fonts\\font0.ttf'),
-        ["Secondary"] = love.graphics.newFont('Fonts\\font1.ttf')
+        ["main"] = love.graphics.newFont('Fonts/font0.ttf'),
+        ["Secondary"] = love.graphics.newFont('Fonts/Font1.ttf')
     }
     GameManager = GameManager()
 end

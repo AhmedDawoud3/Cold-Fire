@@ -48,10 +48,11 @@ function Gun:update(dt, player)
                 v.x = v.x + 1000000
                 table.remove(enemies, i)
             end
-
-            for o, p in ipairs(cWalls) do
-                if p.y + p.height > v.y and p.y < v.y + 6 and p.x + p.width > v.x and p.x < v.x + 6 then
-                    v.x = v.x + 1000000
+            if cWalls then
+                for o, p in ipairs(cWalls) do
+                    if p.y + p.height > v.y and p.y < v.y + 6 and p.x + p.width > v.x and p.x < v.x + 6 then
+                        v.x = v.x + 1000000
+                    end
                 end
             end
 

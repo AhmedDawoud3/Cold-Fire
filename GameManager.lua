@@ -1,8 +1,8 @@
 GameManager = Class {}
 require 'maps'
 
-require 'Levels\\DemoLevel'
-require 'Levels\\DemoLevel2'
+require 'Levels/DemoLevel'
+require 'Levels/DemoLevel2'
 
 current_level = nil
 

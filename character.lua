@@ -1,6 +1,6 @@
 Character = Class {}
 require 'gun'
-speed = 100
+speed = 1
 collided = false
 function Character:init(x, y, maxHealth)
     self.x, self.y, self.dx, self.dy, self.size = x, y, 0, 0, 50
@@ -72,13 +72,13 @@ function Character:draw()
 end
 
 function Character:Move(x, y)
-    x = math.min(50, x)
-    y = math.min(50, y)
-    self.angle = GetAngle(self.x, self.y, x, y)
-    magmitude = math.sqrt(x * x + y * y)
+    x = math.max(math.min(50, x), -50)
+    y = math.max(math.min(50, y), -50)
+    angleC = GetAngle(0, 0, x, y)
+    magmitude = math.min(math.sqrt(x * x + y * y), 50)
     if x ~= 0 and y ~= 0 and not collided then
-        self.dx = ((x / magmitude) * speed)
-        self.dy = ((y / magmitude) * speed)
+        self.dx = math.cos(angleC) * magmitude * speed * 3
+        self.dy = math.sin(angleC) * magmitude * speed * 3
     else
         self.dx = 0
         self.dy = 0

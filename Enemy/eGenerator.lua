@@ -1,5 +1,5 @@
 EGen = Class {}
-require 'enemy'
+require 'Enemy/enemy'
 enemies = {}
 function EGen:NewEnemy(x, y, size, r, g, b)
     r = r or 1

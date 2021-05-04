@@ -1,8 +1,8 @@
-Class = require 'class'
-require 'TouchContralls'
-require 'character'
-require 'eGenerator'
-require 'GameManager'
+Class = require 'Utils/class'
+require 'Player/TouchContralls'
+require 'Player/character'
+require 'Enemy/eGenerator'
+require 'GameManager/GameManager'
 WIDTH = love.graphics.getWidth()
 HEIGHT = love.graphics.getHeight()
 

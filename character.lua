@@ -21,23 +21,14 @@ function Character:update(dt)
     cWalls = current_level.walls
     if cWalls then
         for i, v in ipairs(cWalls) do
-            -- Y
-            if self.y < cWalls[i].y + cWalls[i].height and self.y > cWalls[i].y + self.size then
-                if self.x < cWalls[i].x + cWalls[i].width and self.x > cWalls[i].x + self.size then
-                    collided = true
-                end
-                if self.x > cWalls[i].x - self.size and self.x < cWalls[i].x + cWalls[i].width then
-                    collided = true
-                end
-            end
-            if self.y > cWalls[i].y - self.size and self.y < cWalls[i].y + cWalls[i].height then
-                if self.x > cWalls[i].x - self.size and self.x < cWalls[i].x + cWalls[i].width then
-                    collided = true
-                    -- 
-                end
-                if self.x < cWalls[i].x + cWalls[i].width and self.x > cWalls[i].x + self.size then
-                    collided = true
-                end
+
+            if Collides(cWalls[i], {
+                x = self.x,
+                y = self.y,
+                width = self.size,
+                height = self.size
+            }) then
+                collided = true
             end
 
             -- if self.y < cWalls[i].y + cWalls[i].height and self.y > cWalls[i].y + self.size and collided then

@@ -28,3 +28,28 @@ function Maps:Render()
         love.graphics.setColor(1, 1, 1, 1)
     end
 end
+
+function Collides(wall, params)
+    obj = {}
+    obj.x = params.x
+    obj.y = params.y
+    obj.width = params.width
+    obj.height = params.height
+    if obj.y < wall.y + wall.height and obj.y > wall.y + obj.height then
+        if obj.x < wall.x + wall.width and obj.x > wall.x + obj.width then
+            return true
+        end
+        if obj.x > wall.x - obj.width and obj.x < wall.x + wall.width then
+            return true
+        end
+    end
+    if obj.y > wall.y - obj.height and obj.y < wall.y + wall.height then
+        if obj.x > wall.x - obj.width and obj.x < wall.x + wall.width then
+            return true
+        end
+        if obj.x < wall.x + wall.width and obj.x > wall.x + obj.width then
+            return true
+        end
+    end
+    return false
+end

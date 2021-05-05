@@ -12,11 +12,15 @@ function Gun:init(player)
     self.endX = self.centerX
     self.endY = self.centerY
     self.angle = 0
+    self.fireable = false
+    self.gunTurningSpeed = 2
 end
 
 function Gun:update(dt, player)
     self.centerX = player.x + (player.size / 2)
     self.centerY = player.y + (player.size / 2)
+    self.oldAngle = self.angle
+    self.fireable = false
     if #enemies > 0 then
         if gNearestEnemy ~= GetnearestEnemy(self) and gNearestEnemy then
             gNearestEnemy.marked = false
@@ -29,6 +33,16 @@ function Gun:update(dt, player)
     else
         self.angle = self.angle + dt
     end
+    if math.abs(self.oldAngle - self.angle) < 0.05 then
+        self.fireable = true
+    end
+    print(self.oldAngle, self.angle)
+    if self.oldAngle > self.angle then
+        self.angle = self.oldAngle - dt * self.gunTurningSpeed
+    else
+        self.angle = self.oldAngle + dt * self.gunTurningSpeed
+    end
+    -- print(self.fireable)
     -- print(math.deg(self.angle))
     self.endX = self.centerX + self.size * math.cos(self.angle)
     self.endY = self.centerY + self.size * math.sin(self.angle)
@@ -66,9 +80,8 @@ function Gun:update(dt, player)
             COOLDOWN = COOLDOWN_TIME
         end
     end
-    if #enemies > 0 then
-
-        Gun:Fire(gNearestEnemy.x, gNearestEnemy.y, self.endX, self.endY)
+    if #enemies > 0 and self.fireable then
+        Fire(self)
     end
 end
 
@@ -78,27 +91,25 @@ function Gun:Render()
         love.graphics.setColor(1, 0, 0, 0.8)
         love.graphics.line(self.centerX, self.centerY, gNearestEnemy.x, gNearestEnemy.y)
     end
+    for i, v in ipairs(bullets) do
+        love.graphics.setColor(0.79, 0.8, 0, 1)
+        love.graphics.circle("fill", v.x, v.y, 6)
+        love.graphics.setColor(1, 1, 1, 1)
+    end
     love.graphics.setLineWidth(6)
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.line(self.centerX, self.centerY, self.endX, self.endY)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.setLineWidth(1)
 
-    for i, v in ipairs(bullets) do
-        love.graphics.setColor(0.79, 0.8, 0, 1)
-        love.graphics.circle("fill", v.x, v.y, 6)
-        love.graphics.setColor(1, 1, 1, 1)
-    end
-
 end
 
-function Gun:Fire(x, y, endX, endY)
+function Fire(self)
     if COOLDOWN >= COOLDOWN_TIME then
         fired = true
-        bulletStartX = endX
-        bulletStartY = endY
-
-        angle = GetAngle(endX, endY, x, y)
+        bulletStartX = self.endX
+        bulletStartY = self.endY
+        angle = GetAngle(self.centerX, self.centerY, self.endX, self.endY)
 
         bulletDX = BULLET_SPEED * math.cos(angle)
         bulletDY = BULLET_SPEED * math.sin(angle)

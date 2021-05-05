@@ -36,7 +36,6 @@ function Gun:update(dt, player)
     if math.abs(self.oldAngle - self.angle) < 0.05 then
         self.fireable = true
     end
-    print(self.oldAngle, self.angle)
     if self.oldAngle > self.angle then
         self.angle = self.oldAngle - dt * self.gunTurningSpeed
     else

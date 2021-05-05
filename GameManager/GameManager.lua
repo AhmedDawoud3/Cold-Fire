@@ -37,6 +37,8 @@ function love.mousepressed(x, y, button, istouch)
     if button == 1 then
         if gameState == 'Start' then
             Start:MosuePressed()
+        elseif gameState == 'Playing' then
+            mousePressed = true
         end
     end
 end

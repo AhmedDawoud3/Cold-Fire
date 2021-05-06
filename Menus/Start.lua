@@ -3,8 +3,8 @@ local clickToStartOpacity = 1
 local clickToStartOpacityRev = false
 local overallOpacity = 1
 local quittingStart = false
-local nextScreenColors = {0.6, 0.44, 0.39}
 local backgroundColor = {0.1, 0.5, 0.3}
+local nextScreenColors = {0.13, 0.47, 0.32}
 function Start:Update(dt)
     if not quittingStart then
         if clickToStartOpacity >= 1 then
@@ -22,16 +22,16 @@ function Start:Update(dt)
         for i = 1, 3, 1 do
             if not (math.abs(backgroundColor[i] - nextScreenColors[i]) < 0.01) then
                 if backgroundColor[i] < nextScreenColors[i] then
-                    backgroundColor[i] = backgroundColor[i] + dt
+                    backgroundColor[i] = backgroundColor[i] + dt / 4
                 else
-                    backgroundColor[i] = backgroundColor[i] - dt
+                    backgroundColor[i] = backgroundColor[i] - dt / 4
                 end
             end
         end
     end
 
     if overallOpacity <= 0 then
-        gameState = 'Playing'
+        gameState = 'MainMenu'
     end
 end
 

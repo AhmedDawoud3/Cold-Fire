@@ -14,6 +14,7 @@ function Gun:init(player)
     self.angle = 0
     self.fireable = false
     self.gunTurningSpeed = 2
+    self.damage = 50
 end
 
 function Gun:update(dt, player)
@@ -60,7 +61,7 @@ function Gun:update(dt, player)
                 v.x = v.x * 1000
                 v.y = v.y * 1000
                 v.x = v.x + 1000000
-                table.remove(enemies, i)
+                enemies[i]:hit()
             end
             if cWalls then
                 for o, p in ipairs(cWalls) do
@@ -69,7 +70,9 @@ function Gun:update(dt, player)
                     end
                 end
             end
-
+            if enemies[i].health <= 0 then
+                table.remove(enemies, i)
+            end
         end
     end
 

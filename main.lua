@@ -2,7 +2,8 @@ Class = require 'Utils/class'
 Fonts = {
     ["main"] = love.graphics.newFont('Fonts/font0.ttf', 50),
     ["Big"] = love.graphics.newFont('Fonts/font0.ttf', 100),
-    ["Secondary"] = love.graphics.newFont('Fonts/Font1.ttf', 40)
+    ["Secondary"] = love.graphics.newFont('Fonts/Font1.ttf', 40),
+    ["SecondarySmall"] = love.graphics.newFont('Fonts/Font1.ttf', 35)
 }
 require 'Player/TouchContralls'
 require 'Player/character'

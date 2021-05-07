@@ -3,6 +3,7 @@ require 'GameManager/maps'
 require 'Menus/Start'
 require 'Menus/MainMenu'
 require 'Menus/Options'
+require 'Menus/Shop'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
@@ -26,6 +27,8 @@ function GameManager:update(dt)
         MainMenu:Update(dt)
     elseif gameState == 'Options' then
         Options:Update(dt)
+    elseif gameState == 'Shop' then
+        Shop:Update(dt)
     elseif gameState == 'Playing' then
         if #enemies == 0 then
             current_level.walls = {}
@@ -42,6 +45,8 @@ function GameManager:Render()
         MainMenu:Render()
     elseif gameState == 'Options' then
         Options:Render()
+    elseif gameState == 'Shop' then
+        Shop:Render()
     elseif gameState == 'Playing' then
         current_level:Render()
     end
@@ -55,6 +60,8 @@ function love.mousepressed(x, y, button, istouch)
             MainMenu:mousePressed(x, y)
         elseif gameState == 'Options' then
             Options:mousePressed(x, y)
+        elseif gameState == 'Shop' then
+            Shop:mousePressed(x, y)
         elseif gameState == 'Playing' then
             mousePressed = true
         end

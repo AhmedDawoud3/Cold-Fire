@@ -5,6 +5,7 @@ local nextScreenColors
 local quittingMainMenu = false
 local goingPlay = false
 local goingOptions = false
+local goingShop = false
 local xCold = -200
 local xFire = 200
 local overallOpacity = 1
@@ -25,6 +26,15 @@ local playButton = {
     lineWidth = Fonts['main']:getWidth("Play") + 120,
     lineHeight = Fonts['main']:getHeight("Play")
 }
+local shopButton = {
+    x = 391 / 2 - Fonts['main']:getWidth("Play") / 2,
+    y = 630,
+    lineX = (391 / 2 - Fonts['main']:getWidth("Play") / 2) - 60,
+    lineY = 632,
+    lineWidth = Fonts['main']:getWidth("Play") + 120,
+    lineHeight = Fonts['main']:getHeight("Play")
+}
+
 function MainMenu:Update(dt)
     xCold = math.min(0, xCold + 350 * dt)
     xFire = math.max(0, xFire - 350 * dt)
@@ -46,6 +56,8 @@ function MainMenu:Update(dt)
             gameState = 'Playing'
         elseif goingOptions then
             gameState = 'Options'
+        elseif goingShop then
+            gameState = 'Shop'
         end
         MainMenu:Reset()
 
@@ -69,6 +81,9 @@ function MainMenu:Render()
     love.graphics.print("Play", playButton.x, playButton.y)
     love.graphics.rectangle("line", playButton.lineX, playButton.lineY, playButton.lineWidth, playButton.lineHeight, 10,
         10)
+    love.graphics.print("Shop", shopButton.x, shopButton.y)
+    love.graphics.rectangle("line", shopButton.lineX, shopButton.lineY, shopButton.lineWidth, shopButton.lineHeight, 10,
+        10)
 end
 
 function MainMenu:mousePressed(x, y)
@@ -81,6 +96,10 @@ function MainMenu:mousePressed(x, y)
         quittingMainMenu = true
         goingOptions = true
         nextScreenColors = backgroundColor
+    elseif CheckMouseCollision(x, y, shopButton.lineX, shopButton.lineY, shopButton.lineWidth, shopButton.lineHeight) then
+        quittingMainMenu = true
+        goingShop = true
+        nextScreenColors = backgroundColor
     end
 end
 
@@ -88,6 +107,7 @@ function MainMenu:Reset()
     quittingMainMenu = false
     goingPlay = false
     goingOptions = false
+    goingShop = false
     xCold = -200
     xFire = 200
     overallOpacity = 1

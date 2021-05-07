@@ -11,7 +11,7 @@ current_level = nil
 gameState = nil
 
 function GameManager:init()
-    gameState = 'Options'
+    gameState = 'Start'
     current_level = DemoLevel()
     images = {
         ['options'] = love.graphics.newImage('Graphics/MainMenuGraphics/options.png'),

@@ -1,8 +1,10 @@
 MainMenu = Class {}
 
 local backgroundColor = {0.13, 0.47, 0.32}
-local nextScreenColors = {0.6, 0.44, 0.39}
+local nextScreenColors
 local quittingMainMenu = false
+local goingPlay = false
+local goingOptions = false
 local xCold = -200
 local xFire = 200
 local overallOpacity = 1
@@ -23,13 +25,12 @@ local playButton = {
     lineWidth = Fonts['main']:getWidth("Play") + 120,
     lineHeight = Fonts['main']:getHeight("Play")
 }
-local optionsOpacity = 0
 function MainMenu:Update(dt)
     xCold = math.min(0, xCold + 350 * dt)
     xFire = math.max(0, xFire - 350 * dt)
-    optionsOpacity = math.min(1, optionsOpacity + dt)
+    options.optionsOpacity = math.min(1, options.optionsOpacity + dt)
     if quittingMainMenu then
-        overallOpacity = overallOpacity - dt / 2
+        overallOpacity = overallOpacity - dt * 2
         for i = 1, 3, 1 do
             if not (math.abs(backgroundColor[i] - nextScreenColors[i]) < 0.01) then
                 if backgroundColor[i] < nextScreenColors[i] then
@@ -41,7 +42,13 @@ function MainMenu:Update(dt)
         end
     end
     if overallOpacity <= 0 then
-        gameState = 'Playing'
+        if goingPlay then
+            gameState = 'Playing'
+        elseif goingOptions then
+            gameState = 'Options'
+        end
+        MainMenu:Reset()
+
     end
 end
 
@@ -53,7 +60,7 @@ function MainMenu:Render()
     if quittingMainMenu then
         love.graphics.setColor(1, 1, 1, overallOpacity)
     else
-        love.graphics.setColor(1, 1, 1, optionsOpacity)
+        love.graphics.setColor(1, 1, 1, options.optionsOpacity)
     end
     love.graphics.draw(images['options'], options.x, options.y, 0, 0.1, 0.1)
     love.graphics.setLineWidth(3)
@@ -67,7 +74,32 @@ end
 function MainMenu:mousePressed(x, y)
     if CheckMouseCollision(x, y, playButton.lineX, playButton.lineY, playButton.lineWidth, playButton.lineHeight) then
         quittingMainMenu = true
+        nextScreenColors = {0.6, 0.44, 0.39}
+        goingPlay = true
+    elseif CheckMouseCollision(x, y, options.lineX, options.lineY, options.lineWidth, options.lineHeight) and
+        options.optionsOpacity >= 0.5 then
+        quittingMainMenu = true
+        goingOptions = true
+        nextScreenColors = backgroundColor
     end
+end
+
+function MainMenu:Reset()
+    quittingMainMenu = false
+    goingPlay = false
+    goingOptions = false
+    xCold = -200
+    xFire = 200
+    overallOpacity = 1
+    options = {
+        optionsOpacity = 0,
+        x = 10,
+        y = 15,
+        lineX = 5,
+        lineY = 10,
+        lineWidth = 60,
+        lineHeight = 60
+    }
 end
 
 function CheckMouseCollision(x, y, x2, y2, width, height)

@@ -2,6 +2,7 @@ GameManager = Class {}
 require 'GameManager/maps'
 require 'Menus/Start'
 require 'Menus/MainMenu'
+require 'Menus/Options'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
@@ -10,10 +11,11 @@ current_level = nil
 gameState = nil
 
 function GameManager:init()
-    gameState = 'Start'
+    gameState = 'Options'
     current_level = DemoLevel()
     images = {
-        ['options'] = love.graphics.newImage('Graphics/MainMenuGraphics/options.png')
+        ['options'] = love.graphics.newImage('Graphics/MainMenuGraphics/options.png'),
+        ['back'] = love.graphics.newImage('Graphics/options/back.png')
     }
 end
 
@@ -22,6 +24,8 @@ function GameManager:update(dt)
         Start:Update(dt)
     elseif gameState == 'MainMenu' then
         MainMenu:Update(dt)
+    elseif gameState == 'Options' then
+        Options:Update(dt)
     elseif gameState == 'Playing' then
         if #enemies == 0 then
             current_level.walls = {}
@@ -36,6 +40,8 @@ function GameManager:Render()
         Start:Render()
     elseif gameState == 'MainMenu' then
         MainMenu:Render()
+    elseif gameState == 'Options' then
+        Options:Render()
     elseif gameState == 'Playing' then
         current_level:Render()
     end
@@ -47,6 +53,8 @@ function love.mousepressed(x, y, button, istouch)
             Start:MosuePressed()
         elseif gameState == 'MainMenu' then
             MainMenu:mousePressed(x, y)
+        elseif gameState == 'Options' then
+            Options:mousePressed(x, y)
         elseif gameState == 'Playing' then
             mousePressed = true
         end

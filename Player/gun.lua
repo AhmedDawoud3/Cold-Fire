@@ -56,12 +56,22 @@ function Gun:update(dt, player)
             table.remove(bullets, i)
         end
         for i = #enemies, 1, -1 do
-            if v.y > enemies[i].y - enemies[i].size and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x -
-                enemies[i].size and v.x < enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
-                v.x = v.x * 1000
-                v.y = v.y * 1000
-                v.x = v.x + 1000000
-                enemies[i]:hit()
+            if enemies[i].type == 1 then
+                if v.y > enemies[i].y - enemies[i].size and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x -
+                    enemies[i].size and v.x < enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
+                    v.x = v.x * 1000
+                    v.y = v.y * 1000
+                    v.x = v.x + 1000000
+                    enemies[i]:hit()
+                end
+            elseif enemies[i].type == 2 then
+                if v.y > enemies[i].y and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x and v.x <
+                    enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
+                    v.x = v.x * 1000
+                    v.y = v.y * 1000
+                    v.x = v.x + 1000000
+                    enemies[i]:hit()
+                end
             end
             if cWalls then
                 for o, p in ipairs(cWalls) do

@@ -5,6 +5,7 @@ function DemoLevel:init()
     EGen:GenerateRandom(10)
     wall0 = Maps:CreateWall(200, 500, 100, 40, 0.4, 0.5, 0.6)
     wall1 = Maps:CreateWall(200, 400, 150, 40, 0.4, 0.5, 0.6)
+    EGen:NewEnemy(2)
     self.walls = {}
     table.insert(self.walls, wall0)
     table.insert(self.walls, wall1)
@@ -15,6 +16,14 @@ function DemoLevel:update(dt)
     FPS = 1 / dt
     mouseX, mouseY = TouchContralls:GetMotion()
     p1:Move(mouseX, mouseY)
+    for i = #enemies, 1, -1 do
+        if enemies[i].type == 2 then
+            enemies[i].x = enemies[i].x + enemies[i].dx * dt
+            if (enemies[i].x > enemies[i].originalX + enemies[i].distX) or (enemies[i].x < enemies[i].originalX) then
+                enemies[i].dx = -enemies[i].dx
+            end
+        end
+    end
 end
 
 function DemoLevel:Render()

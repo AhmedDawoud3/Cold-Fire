@@ -52,7 +52,18 @@ function Character:update(dt)
                 self.y = self.y + yW / 10
             end
         end
+    end
 
+    for i = #enemies, 1, -1 do
+        if enemies[i].type == 2 then
+            if (self.y < enemies[i].y + enemies[i].size and self.y > enemies[i].y + self.size and self.x < enemies[i].x +
+                enemies[i].size and self.x > enemies[i].x + self.size) or
+                (self.y > enemies[i].y - self.size and self.y < enemies[i].y + enemies[i].size and self.x > enemies[i].x -
+                    self.size and self.x < enemies[i].x + enemies[i].size) then
+                print("Collides")
+                self.health.value = self.health.value - 1
+            end
+        end
     end
 
 end

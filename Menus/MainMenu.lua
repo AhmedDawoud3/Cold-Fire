@@ -3,7 +3,7 @@ MainMenu = Class {}
 local backgroundColor = {0.13, 0.47, 0.32}
 local nextScreenColors
 local quittingMainMenu = false
-local goingPlay = false
+local goingLevelSelect = false
 local goingOptions = false
 local goingShop = false
 local xCold = -200
@@ -41,19 +41,10 @@ function MainMenu:Update(dt)
     options.optionsOpacity = math.min(1, options.optionsOpacity + dt)
     if quittingMainMenu then
         overallOpacity = overallOpacity - dt * 2
-        for i = 1, 3, 1 do
-            if not (math.abs(backgroundColor[i] - nextScreenColors[i]) < 0.01) then
-                if backgroundColor[i] < nextScreenColors[i] then
-                    backgroundColor[i] = backgroundColor[i] + dt / 4
-                else
-                    backgroundColor[i] = backgroundColor[i] - dt / 4
-                end
-            end
-        end
     end
     if overallOpacity <= 0 then
-        if goingPlay then
-            gameState = 'Playing'
+        if goingLevelSelect then
+            gameState = 'LevelSelect'
         elseif goingOptions then
             gameState = 'Options'
         elseif goingShop then
@@ -90,7 +81,7 @@ function MainMenu:mousePressed(x, y)
     if CheckMouseCollision(x, y, playButton.lineX, playButton.lineY, playButton.lineWidth, playButton.lineHeight) then
         quittingMainMenu = true
         nextScreenColors = {0.6, 0.44, 0.39}
-        goingPlay = true
+        goingLevelSelect = true
     elseif CheckMouseCollision(x, y, options.lineX, options.lineY, options.lineWidth, options.lineHeight) and
         options.optionsOpacity >= 0.5 then
         quittingMainMenu = true
@@ -105,7 +96,7 @@ end
 
 function MainMenu:Reset()
     quittingMainMenu = false
-    goingPlay = false
+    goingLevelSelect = false
     goingOptions = false
     goingShop = false
     xCold = -200

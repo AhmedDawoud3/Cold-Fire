@@ -4,6 +4,7 @@ require 'Menus/Start'
 require 'Menus/MainMenu'
 require 'Menus/Options'
 require 'Menus/Shop'
+require 'Menus/LevelSelect'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
@@ -13,11 +14,19 @@ gameState = nil
 
 function GameManager:init()
     gameState = 'Start'
-    current_level = DemoLevel()
+    LevelSelect:AddNewLevel("Level 1", DemoLevel)
+    LevelSelect:AddNewLevel("Level 2", DemoLevel2)
+    levels[1].opened = true
+    levels[2].opened = true
     images = {
         ['options'] = love.graphics.newImage('Graphics/MainMenuGraphics/options.png'),
-        ['back'] = love.graphics.newImage('Graphics/options/back.png')
+        ['back'] = love.graphics.newImage('Graphics/Global/back.png'),
+        ['lock'] = love.graphics.newImage('Graphics/LevelSelect/lock.png')
     }
+end
+
+function GameManager:SetCurrentLevel(level)
+    current_level = level()
 end
 
 function GameManager:update(dt)
@@ -29,11 +38,9 @@ function GameManager:update(dt)
         Options:Update(dt)
     elseif gameState == 'Shop' then
         Shop:Update(dt)
+    elseif gameState == 'LevelSelect' then
+        LevelSelect:Update(dt)
     elseif gameState == 'Playing' then
-        if #enemies == 0 then
-            current_level.walls = {}
-            current_level = DemoLevel2()
-        end
         current_level:update(dt)
     end
 end
@@ -47,6 +54,8 @@ function GameManager:Render()
         Options:Render()
     elseif gameState == 'Shop' then
         Shop:Render()
+    elseif gameState == 'LevelSelect' then
+        LevelSelect:Render()
     elseif gameState == 'Playing' then
         current_level:Render()
     end
@@ -62,6 +71,8 @@ function love.mousepressed(x, y, button, istouch)
             Options:mousePressed(x, y)
         elseif gameState == 'Shop' then
             Shop:mousePressed(x, y)
+        elseif gameState == 'LevelSelect' then
+            LevelSelect:mousePressed(x, y)
         elseif gameState == 'Playing' then
             mousePressed = true
         end

@@ -45,7 +45,7 @@ function LevelSelect:Update(dt)
         end
         LevelSelect:Reset()
     end
-    if leavingLevelSelect then
+    if leavingLevelSelect and goingPlay then
         for i = 1, 3, 1 do
             if not (math.abs(backgroundColor[i] - nextScreenColor[i]) < 0.01) then
                 if backgroundColor[i] < nextScreenColor[i] then
@@ -114,6 +114,8 @@ end
 function LevelSelect:Reset()
     globalX = 0
     leavingLevelSelect = false
+    goingMainMenu = false
+    goingPlay = false
     for i, v in ipairs(levels) do
         v.selected = false
     end

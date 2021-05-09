@@ -86,10 +86,10 @@ function Character:Move(x, y)
     x = math.max(math.min(50, x), -50)
     y = math.max(math.min(50, y), -50)
     angleC = GetAngle(0, 0, x, y)
-    magmitude = math.min(math.sqrt(x * x + y * y), 50)
+    magnitude = math.min(math.sqrt(x * x + y * y), 50)
     if x ~= 0 and y ~= 0 and not collided then
-        self.dx = math.cos(angleC) * magmitude * speed * 3
-        self.dy = math.sin(angleC) * magmitude * speed * 3
+        self.dx = math.cos(angleC) * magnitude * speed * 3
+        self.dy = math.sin(angleC) * magnitude * speed * 3
     else
         self.dx = 0
         self.dy = 0

@@ -10,6 +10,8 @@ function Character:init(x, y, maxHealth)
         opacity = 1
     }
     gun = Gun(self)
+    xAmountIn = 0
+    yAmountIn = 0
 end
 
 function Character:update(dt)
@@ -17,11 +19,10 @@ function Character:update(dt)
     gun:update(dt, self)
     self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
     self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
-    collided = false
     cWalls = current_level.walls
     if cWalls then
         for i, v in ipairs(cWalls) do
-
+            collided = false
             if Collides(cWalls[i], {
                 x = self.x,
                 y = self.y,
@@ -31,25 +32,36 @@ function Character:update(dt)
                 collided = true
             end
 
-            -- if self.y < cWalls[i].y + cWalls[i].height and self.y > cWalls[i].y + self.size and collided then
-            --     self.y = cWalls[i].y + cWalls[i].height
-            -- end
-            -- if self.y > cWalls[i].y - self.size and self.y < cWalls[i].y + cWalls[i].height and collided then
-            --     self.y = cWalls[i].y - self.size
-            -- end
-            -- if self.x < cWalls[i].x + cWalls[i].width and self.x > cWalls[i].x + self.size and collided then
-            --     self.x = cWalls[i].x + cWalls[i].width
-            -- end
-            -- if self.x > cWalls[i].x - self.size and self.x < cWalls[i].x + cWalls[i].width then
-            --     self.x = cWalls[i].x - self.size
-            -- end
             if collided then
-                angleW = GetAngle(self.x + (self.size / 2), self.y + (self.size / 2),
-                             cWalls[i].x + (cWalls[i].width / 2), cWalls[i].y + (cWalls[i].height / 2))
-                xW = -math.cos(angleW)
-                yW = -math.sin(angleW)
-                self.x = self.x + xW / 10
-                self.y = self.y + yW / 10
+                if self.dx > 0 then
+                    xAmountIn = self.x + self.size - (cWalls[i].x - self.size)
+                elseif self.dx < 0 then
+                    xAmountIn = (cWalls[i].x + cWalls[i].width) - self.x
+                end
+
+                if self.dy > 0 then
+                    yAmountIn = self.y + self.size - (cWalls[i].y - self.size)
+                elseif self.dy < 0 then
+                    yAmountIn = (cWalls[i].y + cWalls[i].height) - self.y
+                end
+                if xAmountIn < yAmountIn then
+                    if self.dx ~= 0 then
+                        if self.dx > 0 then
+                            self.x = cWalls[i].x - self.size
+                        else
+                            self.x = cWalls[i].x + cWalls[i].width
+                        end
+                    end
+                else
+                    if self.dy ~= 0 then
+                        if self.dy > 0 then
+                            self.y = cWalls[i].y - self.size
+                        else
+                            self.y = cWalls[i].y + cWalls[i].height
+                        end
+                    end
+                end
+
             end
         end
     end
@@ -87,7 +99,7 @@ function Character:Move(x, y)
     y = math.max(math.min(50, y), -50)
     angleC = GetAngle(0, 0, x, y)
     magnitude = math.min(math.sqrt(x * x + y * y), 50)
-    if x ~= 0 and y ~= 0 and not collided then
+    if x ~= 0 and y ~= 0 then
         self.dx = math.cos(angleC) * magnitude * speed * 3
         self.dy = math.sin(angleC) * magnitude * speed * 3
     else

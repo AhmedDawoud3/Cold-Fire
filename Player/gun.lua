@@ -18,6 +18,11 @@ function Gun:init(player)
 end
 
 function Gun:update(dt, player)
+    for i, v in ipairs(enemies) do
+        if v.type == 3 then
+            v:update(dt, player)
+        end
+    end
     self.centerX = player.x + (player.size / 2)
     self.centerY = player.y + (player.size / 2)
     self.oldAngle = self.angle
@@ -28,7 +33,12 @@ function Gun:update(dt, player)
         end
         gNearestEnemy = GetnearestEnemy(self)
         if gNearestEnemy then
-            self.angle = GetAngle(self.centerX, self.centerY, gNearestEnemy.x, gNearestEnemy.y)
+            if gNearestEnemy.type == 1 then
+                self.angle = GetAngle(self.centerX, self.centerY, gNearestEnemy.x, gNearestEnemy.y)
+            else
+                self.angle = GetAngle(self.centerX, self.centerY, gNearestEnemy.x + gNearestEnemy.size / 2,
+                                 gNearestEnemy.y + gNearestEnemy.size / 2)
+            end
             gNearestEnemy.marked = true
         end
     else
@@ -65,6 +75,14 @@ function Gun:update(dt, player)
                     enemies[i]:hit()
                 end
             elseif enemies[i].type == 2 then
+                if v.y > enemies[i].y and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x and v.x <
+                    enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
+                    v.x = v.x * 1000
+                    v.y = v.y * 1000
+                    v.x = v.x + 1000000
+                    enemies[i]:hit()
+                end
+            elseif enemies[i].type == 3 then
                 if v.y > enemies[i].y and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x and v.x <
                     enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
                     v.x = v.x * 1000

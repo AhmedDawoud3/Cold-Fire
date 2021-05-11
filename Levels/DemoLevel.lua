@@ -6,6 +6,7 @@ function DemoLevel:init()
     wall0 = Maps:CreateWall(200, 500, 100, 40, 0.4, 0.5, 0.6)
     wall1 = Maps:CreateWall(200, 400, 150, 40, 0.4, 0.5, 0.6)
     EGen:NewEnemy(2)
+    EGen:NewEnemy(3)
     self.walls = {}
     table.insert(self.walls, wall0)
     table.insert(self.walls, wall1)

@@ -8,7 +8,7 @@ require 'Menus/LevelSelect'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
-
+require 'GameManager/SaveManager'
 current_level = nil
 gameState = nil
 
@@ -23,6 +23,13 @@ function GameManager:init()
         ['back'] = love.graphics.newImage('Graphics/Global/back.png'),
         ['lock'] = love.graphics.newImage('Graphics/LevelSelect/lock.png')
     }
+    if SaveManager:CheckForSaveFile() then
+        money = SaveManager:LoadGame()[1] or 0
+    else
+        money = 999
+    end
+    SaveManager:SaveGame()
+    print(money)
 end
 
 function GameManager:SetCurrentLevel(level)

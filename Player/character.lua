@@ -2,9 +2,15 @@ Character = Class {}
 require 'Player/gun'
 speed = 1
 collided = false
-function Character:init(x, y, maxHealth)
+function Character:init(x, y)
     self.x, self.y, self.dx, self.dy, self.size = x, y, 0, 0, 50
-    self.maxHealth = maxHealth or 100
+    c1, c2, c3 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)')
+    upgradedHealth = tonumber(c1)
+    if upgradedHealth == 1 then
+        self.maxHealth = 150
+    else
+        self.maxHealth = 100
+    end
     self.health = {
         value = self.maxHealth,
         opacity = 1

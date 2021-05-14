@@ -3,6 +3,21 @@ Shop = Class {}
 local backgroundColor = {0.13, 0.47, 0.32}
 local globalX = 0
 local leavingShop = false
+local inShop = true
+local globalOpacity = 1
+local selectedUpgrade = nil
+local YesButton = {
+    x = 40,
+    y = 650,
+    width = 150,
+    height = 50
+}
+local NoButton = {
+    x = 10 + 391 / 2,
+    y = 650,
+    width = 145,
+    height = 50
+}
 upgrades = {}
 for j = 0, 3, 1 do
     for i = 0, 2, 1 do
@@ -18,11 +33,20 @@ for j = 0, 3, 1 do
             height = 110,
             owned = false,
             upgradable = false,
-            available = false
+            available = false,
+            selected = false,
+            code = ''
         })
     end
 end
 function Shop:Update(dt)
+    if selectedUpgrade then
+        globalOpacity = 0.1
+        inShop = false
+    else
+        inShop = true
+        globalOpacity = 1
+    end
     for i, v in ipairs(upgrades) do
         if v.price <= money then
             v.upgradable = true
@@ -37,17 +61,27 @@ function Shop:Update(dt)
         gameState = 'MainMenu'
         Shop:Reset()
     end
+    upgradeData = SaveManager:LoadGame()[2]
+    c1, c2, c3 = upgradeData:match('(%d)(%d)(%d)')
+    upgradeData = {tonumber(c1), tonumber(c2), tonumber(c3)}
+    for i, v in ipairs(upgradeData) do
+        if v == 1 then
+            upgrades[i].owned = true
+        end
+    end
 end
 
 function Shop:Render()
     love.graphics.clear(backgroundColor[1], backgroundColor[2], backgroundColor[3])
-    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setColor(1, 1, 1, globalOpacity)
     love.graphics.printf("Shop", Fonts['main'], 100 + globalX, 7, 200, 'center')
     love.graphics.draw(images['back'], 25 + globalX, 775, 0, 0.1, 0.1)
-    love.graphics.printf("Current Moeny :" .. tonumber(money), Fonts['small'], 100 + globalX, 100, 200, 'center')
+    love.graphics.printf("Current Moeny: " .. tonumber(money), Fonts['small'], 100 + globalX, 100, 200, 'center')
     love.graphics.printf("Available Upgrades", Fonts['SecondarySmall'], 100 + globalX, 150, 200, 'center')
     for i, v in ipairs(upgrades) do
-        love.graphics.setColor(1, 1, 1, (not v.available and 0.5) or (v.upgradable and 1) or (v.owned and 0.5) or 0.5)
+        love.graphics.setColor(1, 1, 1,
+            (v.owned and globalOpacity / 2) or (not v.available and globalOpacity / 2) or
+                (v.upgradable and globalOpacity) or globalOpacity / 2)
         love.graphics.rectangle('line', v.x + globalX, v.y, v.width, v.height, 10, 10)
         if not v.available then
             love.graphics.setFont(Fonts['small'])
@@ -58,11 +92,43 @@ function Shop:Render()
             love.graphics.printf(v.price, v.x + globalX, v.y, v.width, 'center', 0, 1, 1, 0, -80)
         end
     end
+    if selectedUpgrade then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.rectangle('line', 30, 190, 330, 560, 10, 10)
+        love.graphics.printf(selectedUpgrade.title, Fonts['Secondary'], 0, 210, 400, 'center')
+        love.graphics.printf(selectedUpgrade.discription, Fonts['small'], 40, 270, 310, 'center')
+        love.graphics.printf("Costs :" .. selectedUpgrade.price, Fonts['main'], 70, 380, 270, 'center')
+        love.graphics.printf("Are You Sure You Want To Buy ?", Fonts['small'], 40, 610, 310, 'center')
+        love.graphics.rectangle('line', YesButton.x, YesButton.y, YesButton.width, YesButton.height, 10, 10)
+        love.graphics.printf("Yes", Fonts['Secondary'], -40, 660, 310, 'center')
+        love.graphics.rectangle('line', NoButton.x, NoButton.y, NoButton.width, NoButton.height, 10, 10)
+        love.graphics.printf("No", Fonts['Secondary'], 120, 660, 310, 'center')
+    end
 end
 
 function Shop:mousePressed(x, y)
-    if CheckMouseCollision(x, y, 25, 775, 50, 50) then
+    if CheckMouseCollision(x, y, 25, 775, 50, 50) and inShop then
         leavingShop = true
+    end
+    if selectedUpgrade then
+        if CheckMouseCollision(x, y, YesButton.x, YesButton.y, YesButton.width, YesButton.height) then
+            for i, v in ipairs(upgrades) do
+                if v == selectedUpgrade then
+                    SaveManager:ChangeUpgrade(i)
+                end
+            end
+            money = money - selectedUpgrade.price
+            selectedUpgrade.owned = true
+            selectedUpgrade = false
+        elseif CheckMouseCollision(x, y, NoButton.x, NoButton.y, NoButton.width, NoButton.height) then
+            selectedUpgrade = false
+        end
+    else
+        for i, v in ipairs(upgrades) do
+            if CheckMouseCollision(x, y, v.x, v.y, v.width, v.height) and v.upgradable and not v.owned then
+                selectedUpgrade = v
+            end
+        end
     end
 end
 

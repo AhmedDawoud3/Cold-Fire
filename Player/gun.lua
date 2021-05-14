@@ -13,8 +13,20 @@ function Gun:init(player)
     self.endY = self.centerY
     self.angle = 0
     self.fireable = false
-    self.gunTurningSpeed = 2
-    self.damage = 50
+    c1, c2, c3 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)')
+    upgradedRotationSpeed = tonumber(c2)
+    if upgradedRotationSpeed == 1 then
+        self.gunTurningSpeed = 2
+    else
+        self.gunTurningSpeed = 1
+    end
+    c1, c2, c3 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)')
+    upgradedDamage = tonumber(c3)
+    if upgradedDamage == 1 then
+        self.damage = 75
+    else
+        self.damage = 50
+    end
 end
 
 function Gun:update(dt, player)

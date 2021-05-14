@@ -24,9 +24,9 @@ function GameManager:init()
         ['lock'] = love.graphics.newImage('Graphics/LevelSelect/lock.png')
     }
     if SaveManager:CheckForSaveFile() then
-        money = tonumber(SaveManager:LoadGame()[1]) or 0
+        money = tonumber(SaveManager:LoadGame()[1])
     else
-        money = 999
+        money = 0
     end
     SaveManager:SaveGame()
     shopData = Shop:LoadData()
@@ -37,6 +37,7 @@ function GameManager:SetCurrentLevel(level)
 end
 
 function GameManager:update(dt)
+    SaveManager:SaveGame(money)
     if gameState == 'Start' then
         Start:Update(dt)
     elseif gameState == 'MainMenu' then

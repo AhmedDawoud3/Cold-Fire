@@ -33,6 +33,8 @@ function Gun:update(dt, player)
     for i, v in ipairs(enemies) do
         if v.type == 3 then
             v:update(dt, player)
+        elseif v.type == 4 then
+            v:update(dt, player)
         end
     end
     self.centerX = player.x + (player.size / 2)
@@ -95,6 +97,14 @@ function Gun:update(dt, player)
                     enemies[i]:hit()
                 end
             elseif enemies[i].type == 3 then
+                if v.y > enemies[i].y and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x and v.x <
+                    enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
+                    v.x = v.x * 1000
+                    v.y = v.y * 1000
+                    v.x = v.x + 1000000
+                    enemies[i]:hit()
+                end
+            elseif enemies[i].type == 4 then
                 if v.y > enemies[i].y and v.y < enemies[i].y + enemies[i].size and v.x > enemies[i].x and v.x <
                     enemies[i].x + enemies[i].size then -- enemies[i].health = enemies[i].health - 20
                     v.x = v.x * 1000

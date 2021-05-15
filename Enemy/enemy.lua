@@ -129,6 +129,15 @@ end
 
 function Enemy:hit()
     self.health = self.health - gun.damage
+    if self.health <= 0 then
+        if self.type == 1 then
+            money = money + 1
+        elseif self.type == 2 then
+            money = money + 3
+        elseif self.type == 3 then
+            money = money + 5
+        end
+    end
 end
 function Enemy:Fire()
     if self.COOLDOWN >= self.COOLDOWN_TIME then

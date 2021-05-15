@@ -5,6 +5,7 @@ require 'Menus/MainMenu'
 require 'Menus/Options'
 require 'Menus/Shop'
 require 'Menus/LevelSelect'
+require 'Menus/DeadScreen'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
@@ -62,6 +63,8 @@ function GameManager:Render()
         Options:Render()
     elseif gameState == 'Shop' then
         Shop:Render()
+    elseif gameState == 'DeadScreen' then
+        DeadScreen:Render()
     elseif gameState == 'LevelSelect' then
         LevelSelect:Render()
     elseif gameState == 'Playing' then

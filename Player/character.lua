@@ -23,6 +23,9 @@ end
 function Character:update(dt)
     self.health.value = math.max(0, self.health.value)
     gun:update(dt, self)
+    if self.health.value <= 0 then
+        gameState = 'DeadScreen'
+    end
     self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
     self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
     cWalls = current_level.walls

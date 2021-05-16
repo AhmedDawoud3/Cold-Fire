@@ -39,9 +39,13 @@ function LevelSelect:Update(dt)
     if globalX >= 391 or globalX <= -400 then
         if goingMainMenu then
             gameState = 'MainMenu'
+            leavingLevelSelect = false
+            backgroundColor = {0.13, 0.47, 0.32}
         elseif goingPlay then
             GameManager:SetCurrentLevel(selectedLevel)
             gameState = 'Playing'
+            leavingLevelSelect = false
+            backgroundColor = {0.13, 0.47, 0.32}
         end
         LevelSelect:Reset()
     end

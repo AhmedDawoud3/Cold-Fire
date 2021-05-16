@@ -2,10 +2,11 @@ Gun = Class {}
 smallestDistance = 999999999
 gNearestEnemy = nil
 BULLET_SPEED = 400
-COOLDOWN_TIME = 0.7
-COOLDOWN = COOLDOWN_TIME
+
 local bullets = {}
 function Gun:init(player)
+    self.COOLDOWN_TIME = 0.7
+    self.COOLDOWN = self.COOLDOWN_TIME
     self.size = 35
     self.centerX = player.x + (player.size / 2)
     self.centerY = player.y + (player.size / 2)
@@ -127,10 +128,10 @@ function Gun:update(dt, player)
     end
 
     if fired then
-        COOLDOWN = COOLDOWN - dt
-        if COOLDOWN <= 0 then
+        self.COOLDOWN = self.COOLDOWN - dt
+        if self.COOLDOWN <= 0 then
             fired = false
-            COOLDOWN = COOLDOWN_TIME
+            self.COOLDOWN = self.COOLDOWN_TIME
         end
     end
     if #enemies > 0 and self.fireable and magnitude <= 5 then
@@ -158,7 +159,7 @@ function Gun:Render()
 end
 
 function Fire(self)
-    if COOLDOWN >= COOLDOWN_TIME then
+    if self.COOLDOWN >= self.COOLDOWN_TIME then
         fired = true
         bulletStartX = self.endX
         bulletStartY = self.endY

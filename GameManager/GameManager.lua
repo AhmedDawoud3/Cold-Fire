@@ -51,6 +51,8 @@ function GameManager:update(dt)
         LevelSelect:Update(dt)
     elseif gameState == 'Playing' then
         current_level:update(dt)
+    elseif gameState == 'DeadScreen' then
+        DeadScreen:update(dt)
     end
 end
 
@@ -86,6 +88,8 @@ function love.mousepressed(x, y, button, istouch)
             LevelSelect:mousePressed(x, y)
         elseif gameState == 'Playing' then
             mousePressed = true
+        elseif gameState == 'DeadScreen' then
+            DeadScreen:mousePressed(x, y)
         end
     end
 end

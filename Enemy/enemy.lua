@@ -91,9 +91,9 @@ function Enemy:update(dt, player)
                 self.COOLDOWN = self.COOLDOWN_TIME
             end
         end
-        if not CheckRayCollisionWithWall(self, player.x, player.y) then
-            self:Fire()
-        end
+        -- if not CheckRayCollisionWithWall(self, player.x, player.y) then
+        self:Fire()
+        -- end
     elseif self.type == 4 then
         self.angle = GetAngle(self.x, self.y, player.x, player.y)
         self.dx = math.cos(self.angle) * 75

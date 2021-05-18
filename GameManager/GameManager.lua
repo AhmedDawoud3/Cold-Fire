@@ -6,6 +6,7 @@ require 'Menus/Options'
 require 'Menus/Shop'
 require 'Menus/LevelSelect'
 require 'Menus/DeadScreen'
+require 'Menus/PauseScreen'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
@@ -53,6 +54,8 @@ function GameManager:update(dt)
         current_level:update(dt)
     elseif gameState == 'DeadScreen' then
         DeadScreen:update(dt)
+    elseif gameState == 'Pause' then
+        PauseScreen:Update(dt)
     end
 end
 
@@ -71,6 +74,8 @@ function GameManager:Render()
         LevelSelect:Render()
     elseif gameState == 'Playing' then
         current_level:Render()
+    elseif gameState == 'Pause' then
+        PauseScreen:Render()
     end
 end
 
@@ -90,12 +95,24 @@ function love.mousepressed(x, y, button, istouch)
             mousePressed = true
         elseif gameState == 'DeadScreen' then
             DeadScreen:mousePressed(x, y)
+        elseif gameState == 'Pause' then
+            PauseScreen:mousePressed(x, y)
         end
     end
 end
 
 function love.keypressed(key)
     if key == "escape" then
-        love.event.quit()
+        if gameState == 'Playing' then
+            gameState = 'Pause'
+        elseif gameState == 'Options' then
+            Options:mousePressed(30, 800)
+        elseif gameState == 'Shop' then
+            Shop:mousePressed(30, 800)
+        elseif gameState == 'LevelSelect' then
+            LevelSelect:mousePressed(30, 800)
+        else
+            love.event.quit()
+        end
     end
 end

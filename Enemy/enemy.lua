@@ -210,6 +210,8 @@ function Enemy:hit()
             money = money + 3
         elseif self.type == 3 then
             money = money + 5
+        elseif self.type == 4 then
+            money = money + 5
         end
     end
 end

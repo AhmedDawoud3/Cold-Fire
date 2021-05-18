@@ -2,12 +2,19 @@ DemoLevel = Class {}
 
 function DemoLevel:init()
     p1 = Character(100, 110)
-    EGen:GenerateRandom(10)
+    EGen:GenerateRandom(1)
     wall0 = Maps:CreateWall(200, 500, 100, 40, 0.4, 0.5, 0.6)
     wall1 = Maps:CreateWall(200, 400, 150, 40, 0.4, 0.5, 0.6)
     EGen:NewEnemy(2)
     EGen:NewEnemy(3)
     EGen:NewEnemy(4)
+    EGen:NewEnemy(2)
+    EGen:NewEnemy(3)
+    EGen:NewEnemy(4)
+    EGen:NewEnemy(2)
+    EGen:NewEnemy(3)
+    EGen:NewEnemy(4)
+
     self.walls = {}
     table.insert(self.walls, wall0)
     table.insert(self.walls, wall1)

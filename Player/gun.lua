@@ -136,8 +136,12 @@ function Gun:update(dt, player)
             self.COOLDOWN = self.COOLDOWN_TIME
         end
     end
-    if #enemies > 0 and self.fireable and (magnitude <= 5 or movingFireBoost) then
-        Fire(self)
+    if #enemies > 0 and self.fireable then
+        if movingFireBoost then
+            Fire(self)
+        elseif magnitude <= 5 then
+            Fire(self)
+        end
     end
 end
 

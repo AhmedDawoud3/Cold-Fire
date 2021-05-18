@@ -40,7 +40,6 @@ end
 
 function GameManager:update(dt)
     ReadUpgrades()
-    SaveManager:SaveGame(money)
     if gameState == 'Start' then
         Start:Update(dt)
     elseif gameState == 'MainMenu' then
@@ -48,10 +47,12 @@ function GameManager:update(dt)
     elseif gameState == 'Options' then
         Options:Update(dt)
     elseif gameState == 'Shop' then
+        SaveManager:SaveGame(money)
         Shop:Update(dt)
     elseif gameState == 'LevelSelect' then
         LevelSelect:Update(dt)
     elseif gameState == 'Playing' then
+        SaveManager:SaveGame(money)
         current_level:update(dt)
     elseif gameState == 'DeadScreen' then
         DeadScreen:update(dt)

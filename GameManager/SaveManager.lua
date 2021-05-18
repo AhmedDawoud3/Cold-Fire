@@ -78,3 +78,8 @@ function SaveManager:ChangeUpgrade(bit)
     end
     SaveManager:SaveGame(nil, tostring(t[1] .. t[2] .. t[3] .. t[4] .. t[5] .. t[6] .. t[7] .. t[8]))
 end
+
+function SaveManager:ResetStats()
+    money = 0
+    SaveManager:SaveGame(0, '00000000')
+end

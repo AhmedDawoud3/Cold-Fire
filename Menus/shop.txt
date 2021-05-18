@@ -1,3 +1,8 @@
 Max Health Boost,10,Increases The Maximum Health Of The Player
 Gun Rotate Boost,1,Increases The Roation Speed Of The Gun
 Damage Increase,1,Increases The Damage Done By The Gun
+Fire Rate Boost,10,Increases Gun's Fire Rate
+Fire While Move,10,Enables You to Fire While Moving
+Instant Gun Lock,10,Makes The Gun Auto-Locks To The Enemis With No Rotation
+Non Stoppable bullets,10,The Bullets Will Not Stop when Hitting a Wall
+Speed Boost,10,Increases The Speed Of The Player

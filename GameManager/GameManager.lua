@@ -39,6 +39,7 @@ function GameManager:SetCurrentLevel(level)
 end
 
 function GameManager:update(dt)
+    ReadUpgrades()
     SaveManager:SaveGame(money)
     if gameState == 'Start' then
         Start:Update(dt)
@@ -115,4 +116,49 @@ function love.keypressed(key)
             love.event.quit()
         end
     end
+end
+
+function ReadUpgrades()
+    c1, c2, c3, c4, c5, c6, c7, c8 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)(%d)(%d)(%d)(%d)(%d)')
+    if tonumber(c1) == 1 then
+        upgradedHealth = true
+    else
+        upgradedHealth = false
+    end
+    if tonumber(c2) == 1 then
+        upgradedRotationBoost = true
+    else
+        upgradedRotationBoost = false
+    end
+    if tonumber(c3) == 1 then
+        upgradedDamage = true
+    else
+        upgradedDamage = false
+    end
+    if tonumber(c4) == 1 then
+        fireRateBoost = true
+    else
+        fireRateBoost = false
+    end
+    if tonumber(c5) == 1 then
+        movingFireBoost = true
+    else
+        movingFireBoost = false
+    end
+    if tonumber(c6) == 1 then
+        instantGunBoost = true
+    else
+        instantGunBoost = false
+    end
+    if tonumber(c7) == 1 then
+        nonStoppableBulletsBoost = true
+    else
+        nonStoppableBulletsBoost = false
+    end
+    if tonumber(c8) == 1 then
+        speedBoost = true
+    else
+        speedBoost = false
+    end
+
 end

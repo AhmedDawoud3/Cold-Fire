@@ -62,8 +62,9 @@ function Shop:Update(dt)
         Shop:Reset()
     end
     upgradeData = SaveManager:LoadGame()[2]
-    c1, c2, c3 = upgradeData:match('(%d)(%d)(%d)')
-    upgradeData = {tonumber(c1), tonumber(c2), tonumber(c3)}
+    c1, c2, c3, c4, c5, c6, c7, c8 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)(%d)(%d)(%d)(%d)(%d)')
+    upgradeData = {tonumber(c1), tonumber(c2), tonumber(c3), tonumber(c4), tonumber(c5), tonumber(c6), tonumber(c7),
+                   tonumber(c8)}
     for i, v in ipairs(upgradeData) do
         if v == 1 then
             upgrades[i].owned = true

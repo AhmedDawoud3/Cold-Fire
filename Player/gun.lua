@@ -5,7 +5,11 @@ BULLET_SPEED = 400
 
 local bullets = {}
 function Gun:init(player)
-    self.COOLDOWN_TIME = 0.7
+    if fireRateBoost then
+        self.COOLDOWN_TIME = 0.4
+    else
+        self.COOLDOWN_TIME = 0.7
+    end
     self.COOLDOWN = self.COOLDOWN_TIME
     self.size = 35
     self.centerX = player.x + (player.size / 2)
@@ -14,16 +18,12 @@ function Gun:init(player)
     self.endY = self.centerY
     self.angle = 0
     self.fireable = false
-    c1, c2, c3 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)')
-    upgradedRotationSpeed = tonumber(c2)
-    if upgradedRotationSpeed == 1 then
+    if upgradedRotationBoost then
         self.gunTurningSpeed = 2
     else
         self.gunTurningSpeed = 1
     end
-    c1, c2, c3 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)')
-    upgradedDamage = tonumber(c3)
-    if upgradedDamage == 1 then
+    if upgradedDamage then
         self.damage = 75
     else
         self.damage = 50
@@ -63,10 +63,12 @@ function Gun:update(dt, player)
         self.fireable = true
     end
 
-    if self.oldAngle > self.angle then
-        self.angle = self.oldAngle - dt * self.gunTurningSpeed
-    else
-        self.angle = self.oldAngle + dt * self.gunTurningSpeed
+    if not instantGunBoost then
+        if self.oldAngle > self.angle then
+            self.angle = self.oldAngle - dt * self.gunTurningSpeed
+        else
+            self.angle = self.oldAngle + dt * self.gunTurningSpeed
+        end
     end
     -- print(self.fireable)
     -- print(math.deg(self.angle))
@@ -114,7 +116,7 @@ function Gun:update(dt, player)
                     enemies[i]:hit()
                 end
             end
-            if cWalls then
+            if cWalls and not nonStoppableBulletsBoost then
                 for o, p in ipairs(cWalls) do
                     if p.y + p.height > v.y and p.y < v.y + 6 and p.x + p.width > v.x and p.x < v.x + 6 then
                         v.x = v.x + 1000000
@@ -134,7 +136,7 @@ function Gun:update(dt, player)
             self.COOLDOWN = self.COOLDOWN_TIME
         end
     end
-    if #enemies > 0 and self.fireable and magnitude <= 5 then
+    if #enemies > 0 and self.fireable and (magnitude <= 5 or movingFireBoost) then
         Fire(self)
     end
 end

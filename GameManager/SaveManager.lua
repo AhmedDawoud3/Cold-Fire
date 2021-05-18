@@ -16,7 +16,7 @@ function SaveManager:SaveGame(money, upgrades)
         if SaveManager:LoadGame()[2] then
             self.upgrades = SaveManager:LoadGame()[2]
         else
-            self.upgrades = '000'
+            self.upgrades = '00000000'
         end
     end
     -- if not params then
@@ -69,12 +69,12 @@ end
 
 function SaveManager:ChangeUpgrade(bit)
     data = SaveManager:LoadGame()[2]
-    c1, c2, c3 = data:match('(%d)(%d)(%d)')
-    t = {tonumber(c1), tonumber(c2), tonumber(c3)}
+    c1, c2, c3, c4, c5, c6, c7, c8 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)(%d)(%d)(%d)(%d)(%d)')
+    t = {tonumber(c1), tonumber(c2), tonumber(c3), tonumber(c4), tonumber(c5), tonumber(c6), tonumber(c7), tonumber(c8)}
     if t[bit] == 0 then
         t[bit] = 1
     else
         t[bit] = 1
     end
-    SaveManager:SaveGame(nil, tostring(t[1] .. t[2] .. t[3]))
+    SaveManager:SaveGame(nil, tostring(t[1] .. t[2] .. t[3] .. t[4] .. t[5] .. t[6] .. t[7] .. t[8]))
 end

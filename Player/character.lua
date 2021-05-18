@@ -1,12 +1,14 @@
 Character = Class {}
 require 'Player/gun'
-speed = 1
 collided = false
 function Character:init(x, y)
     self.x, self.y, self.dx, self.dy, self.size = x, y, 0, 0, 50
-    c1, c2, c3 = SaveManager:LoadGame()[2]:match('(%d)(%d)(%d)')
-    upgradedHealth = tonumber(c1)
-    if upgradedHealth == 1 then
+    if speedBoost then
+        self.speed = 1.25
+    else
+        self.speed = 1
+    end
+    if upgradedHealth then
         self.maxHealth = 150
     else
         self.maxHealth = 100
@@ -109,8 +111,8 @@ function Character:Move(x, y)
     angleC = GetAngle(0, 0, x, y)
     magnitude = math.min(math.sqrt(x * x + y * y), 50)
     if x ~= 0 and y ~= 0 then
-        self.dx = math.cos(angleC) * magnitude * speed * 3
-        self.dy = math.sin(angleC) * magnitude * speed * 3
+        self.dx = math.cos(angleC) * magnitude * self.speed * 3
+        self.dy = math.sin(angleC) * magnitude * self.speed * 3
     else
         self.dx = 0
         self.dy = 0

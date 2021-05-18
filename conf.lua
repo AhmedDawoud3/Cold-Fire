@@ -1,4 +1,5 @@
 function love.conf(t)
+    love.filesystem.setIdentity("Cold Fire")
     t.accelerometerjoystick = false -- Enable the accelerometer on iOS and Android by exposing it as a Joystick (boolean)
     t.externalstorage = true -- True to save files (and read from the save directory) in external storage on Android (boolean) 
     t.audio.mic = false -- Request and use microphone capabilities in Android (boolean)

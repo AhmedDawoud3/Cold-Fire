@@ -83,7 +83,6 @@ function Character:update(dt)
                 enemies[i].size and self.x > enemies[i].x + self.size) or
                 (self.y > enemies[i].y - self.size and self.y < enemies[i].y + enemies[i].size and self.x > enemies[i].x -
                     self.size and self.x < enemies[i].x + enemies[i].size) then
-                print("Collides")
                 self.health.value = self.health.value - 1
             end
         end

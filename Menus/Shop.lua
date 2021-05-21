@@ -80,7 +80,7 @@ function Shop:Render()
     love.graphics.printf("Current Moeny: " .. tonumber(money), Fonts['small'], 100 + globalX, 100, 200, 'center')
     love.graphics.printf("Available Upgrades", Fonts['SecondarySmall'], 100 + globalX, 150, 200, 'center')
     for i, v in ipairs(upgrades) do
-        love.graphics.setColor(1, 1, 1,
+        love.graphics.setColor(1, (v.owned and 0.7 ) or 1, (v.owned and 0.7 ) or 1,
             (v.owned and globalOpacity / 2) or (not v.available and globalOpacity / 2) or
                 (v.upgradable and globalOpacity) or globalOpacity / 2)
         love.graphics.rectangle('line', v.x + globalX, v.y, v.width, v.height, 10, 10)

@@ -48,7 +48,6 @@ function GameManager:update(dt)
         Start:Update(dt)
     elseif gameState == 'MainMenu' then
         MainMenu:Update(dt)
-        music['mainMenu']:play()
     elseif gameState == 'Options' then
         Options:Update(dt)
     elseif gameState == 'Shop' then
@@ -57,7 +56,6 @@ function GameManager:update(dt)
     elseif gameState == 'LevelSelect' then
         LevelSelect:Update(dt)
     elseif gameState == 'Playing' then
-        music['mainMenu']:stop()
         SaveManager:SaveGame(money)
         current_level:update(dt)
     elseif gameState == 'DeadScreen' then

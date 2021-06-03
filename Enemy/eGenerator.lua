@@ -4,9 +4,9 @@ require 'Enemy/enemy'
 enemies = {}
 
 -- Function to create a new enemy
-function EGen:NewEnemy(type, x, y, size, r, g, b)
+function EGen:NewEnemy(type, x, y, size, r, g, b, distX, distY)
     -- Creating a new enemy 
-    enemy = Enemy(type, x, y, size, r, g, b)
+    enemy = Enemy(type, x, y, size, r, g, b, distX, distY)
 
     -- Adding the created enemy to 'enemies' table
     table.insert(enemies, enemy)

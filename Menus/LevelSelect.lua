@@ -132,6 +132,7 @@ function LevelSelect:AddNewLevel(title, dist)
             levels[i].title = title
             levels[i].dist = dist
             levels[i].available = true
+            levels[i].opened= true
             break
         end
     end

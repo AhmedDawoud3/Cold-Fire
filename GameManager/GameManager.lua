@@ -10,16 +10,23 @@ require 'Menus/PauseScreen'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
+require 'Levels/BaseLevel'
+require 'Levels/Level1'
+require 'Levels/Level2'
+require 'Levels/Level3'
+
+
 require 'GameManager/SaveManager'
 current_level = nil
 gameState = nil
 
 function GameManager:init()
-    gameState = 'Start'
-    LevelSelect:AddNewLevel("Level 1", DemoLevel)
-    LevelSelect:AddNewLevel("Level 2", DemoLevel2)
-    levels[1].opened = true
-    levels[2].opened = true
+    gameState = 'LevelSelect'
+    LevelSelect:AddNewLevel("Level 1", Level1)
+    LevelSelect:AddNewLevel("Level 2", Level2)
+    LevelSelect:AddNewLevel("Level 3", Level3)
+
+    -- LevelSelect:AddNewLevel("Level 2", DemoLevel2)
     images = {
         ['options'] = love.graphics.newImage('Graphics/MainMenuGraphics/options.png'),
         ['back'] = love.graphics.newImage('Graphics/Global/back.png'),
@@ -83,6 +90,11 @@ function GameManager:Render()
     elseif gameState == 'Pause' then
         PauseScreen:Render()
     end
+    love.graphics.setColor(0,0,0,1)
+    love.graphics.rectangle("fill",391, -391, 5000, 5000)
+    love.graphics.rectangle("fill",0, -391, -5000, 700)
+    love.graphics.rectangle("fill",-391, -391, 5000, 391)
+    love.graphics.rectangle("fill",0, 862, 7000, 5000)
 end
 
 function love.mousepressed(x, y, button, istouch)

@@ -44,9 +44,9 @@ function Enemy:init(type, x, y, size, r, g, b, distX, distY)
         self.size = size or 45
         self.x = x or math.random(10 + self.size, 391 - self.size)
         self.y = y or math.random(10 + self.size, 862 - self.size)
-        self.r, self.g, self.b = 29 / 255, 198 / 255, 224 / 255
+        self.r, self.g, self.b = 29 / 255 + math.random(), 198 / 255, 224 / 255 + math.random()
         self.health = health or 100
-        self.dx, self.dy = 100, 100
+        self.dx, self.dy = 100 , 100 + math.random(0, 1) == 1 and 50 or -50
         self.angle = 0
     end
     self.marked = false
@@ -96,8 +96,8 @@ function Enemy:update(dt, player)
         -- end
     elseif self.type == 4 then
         self.angle = GetAngle(self.x, self.y, player.x, player.y)
-        self.dx = math.cos(self.angle) * 75
-        self.dy = math.sin(self.angle) * 75
+        self.dx = math.cos(self.angle + math.random(-0.5, 0.5)) * 75 * math.random(0.1, 1.2)
+        self.dy = math.sin(self.angle + math.random(-0.5, 0.5)) * 75* math.random(0.1, 1.2)
         self.x = math.min(math.max(0, self.x + self.dx * dt), 391 - self.size)
         self.y = math.min(math.max(0, self.y + self.dy * dt), 862 - self.size)
         if self.x + self.size > player.x and self.x < player.x + self.size and self.y + self.size > player.y and self.y <

@@ -17,6 +17,8 @@ HEIGHT = 862
 function love.load()
     math.randomseed(os.time())
     love.window.setMode(391, 862)
+    imageData = love.image.newImageData('Graphics/Icon/512px.png')
+    success = love.window.setIcon(imageData);
     love.window.setTitle("Cold Fire")
     GameManager = GameManager()
 end

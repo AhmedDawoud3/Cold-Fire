@@ -1,8 +1,8 @@
-Max Health Boost,20,Increases The Maximum Health Of The Player
-Gun Rotate Boost,10,Increases The Roation Speed Of The Gun
-Damage Increase,30,Increases The Damage Done By The Gun
-Fire Rate Boost,50,Increases Gun's Fire Rate
-Fire While Move,300,Enables You to Fire While Moving
-Instant Gun Lock,300,Makes The Gun Auto-Locks To The Enemis With No Rotation
-Non Stoppable bullets,800,The Bullets Will Not Stop when Hitting a Wall
-Speed Boost,100,Increases The Speed Of The Player
+Max Health Boost,40,Increases The Maximum Health Of The Player
+Gun Rotate Boost,15,Increases The Roation Speed Of The Gun
+Damage Increase,50,Increases The Damage Done By The Gun
+Fire Rate Boost,70,Increases Gun's Fire Rate
+Fire While Move,2400,Enables You to Fire While Moving
+Instant Gun Lock,1000,Makes The Gun Auto-Locks To The Enemis With No Rotation
+Non Stoppable bullets,5000,The Bullets Will Not Stop when Hitting a Wall
+Speed Boost,150,Increases The Speed Of The Player

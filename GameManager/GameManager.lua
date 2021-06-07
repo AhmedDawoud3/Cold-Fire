@@ -7,6 +7,7 @@ require 'Menus/Shop'
 require 'Menus/LevelSelect'
 require 'Menus/DeadScreen'
 require 'Menus/PauseScreen'
+require 'Menus/LevelCompleted'
 
 require 'Levels/DemoLevel'
 require 'Levels/DemoLevel2'
@@ -51,6 +52,9 @@ end
 
 function GameManager:update(dt)
     ReadUpgrades()
+    if #enemies == 0 and gameState == 'Playing' then
+        gameState = 'LevelCompleted'
+    end
     if gameState == 'Start' then
         Start:Update(dt)
     elseif gameState == 'MainMenu' then
@@ -69,6 +73,8 @@ function GameManager:update(dt)
         DeadScreen:update(dt)
     elseif gameState == 'Pause' then
         PauseScreen:Update(dt)
+    elseif gameState == 'LevelCompleted' then
+        LevelCompleted:update(dt)
     end
 end
 
@@ -89,6 +95,8 @@ function GameManager:Render()
         current_level:Render()
     elseif gameState == 'Pause' then
         PauseScreen:Render()
+    elseif gameState == 'LevelCompleted' then
+        LevelCompleted:Render()
     end
     love.graphics.setColor(0,0,0,1)
     love.graphics.rectangle("fill",391, -391, 5000, 5000)
@@ -115,6 +123,8 @@ function love.mousepressed(x, y, button, istouch)
             DeadScreen:mousePressed(x, y)
         elseif gameState == 'Pause' then
             PauseScreen:mousePressed(x, y)
+        elseif gameState == 'LevelCompleted' then
+            LevelCompleted:mousePressed(x, y)
         end
     end
 end

@@ -22,7 +22,7 @@ current_level = nil
 gameState = nil
 
 function GameManager:init()
-    gameState = 'LevelSelect'
+    gameState = 'Start'
     LevelSelect:AddNewLevel("Level 1", Level1)
     LevelSelect:AddNewLevel("Level 2", Level2)
     LevelSelect:AddNewLevel("Level 3", Level3)
@@ -139,6 +139,8 @@ function love.keypressed(key)
             Shop:mousePressed(30, 800)
         elseif gameState == 'LevelSelect' then
             LevelSelect:mousePressed(30, 800)
+        elseif gameState == 'Pause' then
+            gameState = 'MainMenu'
         else
             love.event.quit()
         end

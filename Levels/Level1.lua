@@ -1,6 +1,7 @@
 Level1 = Class {}
 
 function Level1:init()
+    enemies = {}
     p1 = Character(168, 673)
     wall0 = Maps:CreateWall(80, 460, 400, 40, 0.4, 0.5, 0.6)
     wall1 = Maps:CreateWall(00, 360, 300, 40, 0.4, 0.5, 0.6)

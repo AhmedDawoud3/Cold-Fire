@@ -1,6 +1,7 @@
 Level3 = Class {}
 
 function Level3:init()
+    walls = {}
     enemies = {}
     p1 = Character(168, 673)
     self.walls = {}
